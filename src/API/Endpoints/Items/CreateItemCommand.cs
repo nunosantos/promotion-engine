@@ -1,11 +1,10 @@
-﻿using System;
+﻿using Domain.Orders;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace API.Endpoints.Items
 {
     public class CreateItemCommand
     {
+        public IEnumerable<Item> Items { get; set; }
     }
 }
