@@ -1,15 +1,16 @@
 ﻿using API;
 using API.Endpoints.Items;
 using Domain.Orders;
-using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Xunit;
+
 
 namespace Integration_tests.ItemEndpoint
 {
@@ -42,15 +43,11 @@ namespace Integration_tests.ItemEndpoint
 
             response.EnsureSuccessStatusCode();
 
-            var itemsResponse = await client.GetAsync("/items");
+            var itemsResponse = await client.GetFromJsonAsync<ListIItemResult>($"/items");
 
-            var stringResponse = await itemsResponse.Content.ReadAsStringAsync();
-
-            var itemResult = JsonSerializer.Deserialize<ListIItemResult>(stringResponse);
-
-            itemResult.Items.Should().HaveCount(4);
-            itemResult.Items.ToList()[3].Id.Should().Be('D');
-            itemResult.Items.ToList()[3].UnitPrice.Should().Be(15);
+            itemsResponse.Items.Should().HaveCount(4);
+            itemsResponse.Items[3].Id.Should().Be('D');
+            itemsResponse.Items[3].UnitPrice.Should().Be(15);
         }
 
     }

@@ -1,14 +1,44 @@
-﻿using Infrastructure.Endpoints;
+﻿using Application.Interfaces;
+using Infrastructure.Endpoints;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace API.Endpoints.Items
 {
     public class List : BaseAsyncEndpoint.WithoutRequest.WithResponse<ListIItemResult>
     {
-        public override Task<ActionResult<ListIItemResult>> HandleAsync()
+        private readonly IRepository _repository;
+
+        public List(IRepository repository)
         {
-            throw new System.NotImplementedException();
+            _repository = repository;
+        }
+
+        [HttpGet("items")]
+        [SwaggerOperation(
+            Summary = "List all items",
+            Description = "List all items",
+            OperationId = "Item.List",
+            Tags = new[] { "ItemEndpoint" })
+        ]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public override async Task<ActionResult<ListIItemResult>> HandleAsync()
+        {
+
+            var items = _repository.Get().ToArray();
+
+            if (!items.Any())
+            {
+                return NoContent();
+            }
+
+            return Ok(new ListIItemResult() { Items = items });
         }
     }
 }
