@@ -3,12 +3,10 @@ using API.Endpoints.Items;
 using Domain.Orders;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using FluentAssertions;
 using Xunit;
 
 namespace Integration_tests.ItemEndpoint
@@ -42,14 +40,6 @@ namespace Integration_tests.ItemEndpoint
             var response = await client.PostAsync($"/items", stringContent);
 
             response.EnsureSuccessStatusCode();
-
-            var stringResponse = await response.Content.ReadAsStringAsync();
-
-            var createdItems = JsonSerializer.Deserialize<IEnumerable<Item>>(stringResponse);
-
-            createdItems.Should().HaveCount(4);
-            createdItems.ToList()[3].Id.Should().Be('D');
-            createdItems.ToList()[3].UnitPrice.Should().Be(15);
         }
     }
 }
