@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace API.Endpoints.Items
 {
-    public class List : BaseAsyncEndpoint.WithoutRequest.WithResponse<ListIItemResult>
+    public class List : BaseAsyncEndpoint.WithoutRequest.WithResponse<ListItemResult>
     {
         private readonly IRepository _repository;
 
@@ -28,9 +28,8 @@ namespace API.Endpoints.Items
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public override async Task<ActionResult<ListIItemResult>> HandleAsync()
+        public override async Task<ActionResult<ListItemResult>> HandleAsync()
         {
-
             var items = _repository.Get().ToArray();
 
             if (!items.Any())
@@ -38,7 +37,7 @@ namespace API.Endpoints.Items
                 return NoContent();
             }
 
-            return Ok(new ListIItemResult() { Items = items });
+            return Ok(new ListItemResult() { Items = items });
         }
     }
 }

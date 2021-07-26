@@ -6,7 +6,7 @@ namespace Infrastructure
 {
     public class Repository : IRepository
     {
-        private List<Item> _items;
+        private readonly List<Item> _items;
 
         public Repository()
         {

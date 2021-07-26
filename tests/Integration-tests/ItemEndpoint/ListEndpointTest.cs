@@ -43,7 +43,7 @@ namespace Integration_tests.ItemEndpoint
 
             response.EnsureSuccessStatusCode();
 
-            var itemsResponse = await client.GetFromJsonAsync<ListIItemResult>($"/items");
+            var itemsResponse = await client.GetFromJsonAsync<ListItemResult>($"/items");
 
             itemsResponse.Items.Should().HaveCount(4);
             itemsResponse.Items[3].Id.Should().Be('D');

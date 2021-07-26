@@ -2,7 +2,7 @@
 
 namespace API.Endpoints.Items
 {
-    public class ListIItemResult
+    public class ListItemResult
     {
         public Item[] Items { get; set; }
     }
