@@ -12,5 +12,10 @@ namespace Infrastructure
         {
             _items = item;
         }
+
+        public IEnumerable<Item> Get()
+        {
+            return _items;
+        }
     }
 }
