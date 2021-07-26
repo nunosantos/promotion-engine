@@ -2,18 +2,13 @@
 using Domain.Orders;
 using FluentAssertions;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
-using Xunit.Abstractions;
-using Xunit.Sdk;
 
 namespace Unit_tests.Repository
 {
-    [TestCaseOrderer("Unit_tests.Config.AlphabeticalOrderer", "Unit_tests.Repository")]
     public class RepositoryTests
     {
         private readonly IRepository _repository;
-
 
         public RepositoryTests()
         {
@@ -23,39 +18,40 @@ namespace Unit_tests.Repository
         [Fact]
         public void Add_Item_To_Repository()
         {
-            _repository.Add(
-                new List<Item>()
+            var item = new List<Item>
+            {
+                new()
                 {
-                    new Item()
-                    {
-                        Id = 'A' ,
-                        UnitPrice = 20
-                    }
-                });
+                    Id = 'A',
+                    UnitPrice = 20
+                }
+            };
+            _repository.Add(item);
+            var items = _repository.Get();
+            items.Should().HaveCount(1);
         }
 
         [Fact]
         public void Get_Items_From_Repository()
         {
-            _repository.Add(
-                new List<Item>()
+            var items = new List<Item>()
+            {
+                new()
                 {
-                    new Item()
-                    {
-                        Id = 'A' ,
-                        UnitPrice = 20
-                    },
-                    new Item()
-                    {
-                        Id = 'B' ,
-                        UnitPrice = 20
-                    }
-                });
+                    Id = 'A',
+                    UnitPrice = 20
+                },
+                new()
+                {
+                    Id = 'B',
+                    UnitPrice = 20
+                }
+            };
+
+            _repository.Add(items);
 
             var item = _repository.Get();
             item.Should().HaveCount(2);
         }
     }
-
-   
 }
