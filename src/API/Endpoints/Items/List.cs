@@ -25,7 +25,7 @@ namespace API.Endpoints.Items
             OperationId = "Item.List",
             Tags = new[] { "ItemEndpoint" })
         ]
-        [Consumes(MediaTypeNames.Application.Json)]
+        [Consumes(MediaTypeNames.Application.Json)] 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public override async Task<ActionResult<ListItemResult>> HandleAsync()
