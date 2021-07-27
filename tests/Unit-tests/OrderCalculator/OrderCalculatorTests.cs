@@ -1,12 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using API;
+using Application.Interfaces;
 using Domain.Orders;
 using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Unit_tests.OrderCalculator
 {
-    public class OrderCalculatorTests
+    public class OrderCalculatorTests : IClassFixture<WebApplicationFactory<Startup>>
     {
+        private readonly IRepository _repository;
+
+        public OrderCalculatorTests()
+        {
+            _repository = new Infrastructure.Repository();
+        }
+
         [Fact]
         public void CreateOrder_ScenarioA_Buying_1xA_1xB_1xC_Returns100()
         {
@@ -14,15 +24,15 @@ namespace Unit_tests.OrderCalculator
             {
                 Items = new List<Item>()
                 {
-                    new Item() { Id ="A", UnitPrice = 50, Amount = 1},
-                    new Item() { Id ="B", UnitPrice = 30, Amount = 1},
-                    new Item() { Id ="C", UnitPrice = 20, Amount = 1 }
+                    new Item() { Id ="A", UnitPrice = 50, OrderedAmount = 1},
+                    new Item() { Id ="B", UnitPrice = 30, OrderedAmount = 1},
+                    new Item() { Id ="C", UnitPrice = 20, OrderedAmount = 1 }
                 }
             };
 
-            var cartCalculator = new Application.Services.OrderCalculator();
+            var cartCalculator = new Application.Services.OrderCalculator(_repository);
 
-            var totalCalculatedCost = cartCalculator.CalculateTotal(order);
+            var totalCalculatedCost = cartCalculator.CalculateItemTotal(order);
 
             totalCalculatedCost.Should().Be(100);
         }
@@ -34,15 +44,15 @@ namespace Unit_tests.OrderCalculator
             {
                 Items = new List<Item>()
                 {
-                    new Item() { Id ="A", UnitPrice = 50, Amount = 5},
-                    new Item() { Id ="B", UnitPrice = 30, Amount = 5},
-                    new Item() { Id ="C", UnitPrice = 20, Amount = 1}
+                    new Item() { Id ="A", UnitPrice = 50, OrderedAmount = 5},
+                    new Item() { Id ="B", UnitPrice = 30, OrderedAmount = 5},
+                    new Item() { Id ="C", UnitPrice = 20, OrderedAmount = 1}
                 }
             };
 
-            var cartCalculator = new Application.Services.OrderCalculator();
+            var cartCalculator = new Application.Services.OrderCalculator(_repository);
 
-            var totalCalculatedCost = cartCalculator.CalculateTotal(order);
+            var totalCalculatedCost = cartCalculator.CalculateItemTotal(order);
 
             totalCalculatedCost.Should().Be(370);
         }
@@ -54,16 +64,16 @@ namespace Unit_tests.OrderCalculator
             {
                 Items = new List<Item>()
                 {
-                    new Item() { Id ="A", UnitPrice = 50, Amount = 3},
-                    new Item() { Id ="B", UnitPrice = 30, Amount = 5},
-                    new Item() { Id ="C", UnitPrice = 20, Amount = 1},
-                    new Item() { Id ="D", UnitPrice = 20, Amount = 1}
-                }                        
+                    new Item() { Id ="A", UnitPrice = 50, OrderedAmount = 3},
+                    new Item() { Id ="B", UnitPrice = 30, OrderedAmount = 5},
+                    new Item() { Id ="C", UnitPrice = 20, OrderedAmount = 1},
+                    new Item() { Id ="D", UnitPrice = 20, OrderedAmount = 1}
+                }
             };
 
-            var cartCalculator = new Application.Services.OrderCalculator();
+            var cartCalculator = new Application.Services.OrderCalculator(_repository);
 
-            var totalCalculatedCost = cartCalculator.CalculateTotal(order);
+            var totalCalculatedCost = cartCalculator.CalculateItemTotal(order);
 
             totalCalculatedCost.Should().Be(280);
         }
@@ -75,17 +85,17 @@ namespace Unit_tests.OrderCalculator
             {
                 Items = new List<Item>()
                 {
-                    new Item() { Id ="A", UnitPrice = 50, Amount = 3},
-                    new Item() { Id ="B", UnitPrice = 30, Amount = 5},
-                    new Item() { Id ="C", UnitPrice = 20, Amount = 1},
-                    new Item() { Id ="D", UnitPrice = 20, Amount = 1},
-                    new Item() { Id ="E", UnitPrice = 20, Amount = 1}
+                    new Item() { Id ="A", UnitPrice = 50, OrderedAmount = 3},
+                    new Item() { Id ="B", UnitPrice = 30, OrderedAmount = 5},
+                    new Item() { Id ="C", UnitPrice = 20, OrderedAmount = 1},
+                    new Item() { Id ="D", UnitPrice = 20, OrderedAmount = 1},
+                    new Item() { Id ="E", UnitPrice = 20, OrderedAmount = 1}
                 }
             };
 
-            var cartCalculator = new Application.Services.OrderCalculator();
+            var cartCalculator = new Application.Services.OrderCalculator(_repository);
 
-            var totalCalculatedCost = cartCalculator.CalculateTotal(order);
+            var totalCalculatedCost = cartCalculator.CalculateItemTotal(order);
 
             totalCalculatedCost.Should().Be(300);
         }
@@ -97,18 +107,18 @@ namespace Unit_tests.OrderCalculator
             {
                 Items = new List<Item>()
                 {
-                    new Item() { Id ="A", UnitPrice = 50, Amount = 3},
-                    new Item() { Id ="B", UnitPrice = 30, Amount = 5},
-                    new Item() { Id ="C", UnitPrice = 20, Amount = 1},
-                    new Item() { Id ="D", UnitPrice = 20, Amount = 1},
-                    new Item() { Id ="E", UnitPrice = 20, Amount = 1},
-                    new Item() { Id ="F", UnitPrice = 20, Amount = 4},
+                    new Item() { Id ="A", UnitPrice = 50, OrderedAmount = 3},
+                    new Item() { Id ="B", UnitPrice = 30, OrderedAmount = 5},
+                    new Item() { Id ="C", UnitPrice = 20, OrderedAmount = 1},
+                    new Item() { Id ="D", UnitPrice = 20, OrderedAmount = 1},
+                    new Item() { Id ="E", UnitPrice = 20, OrderedAmount = 1},
+                    new Item() { Id ="F", UnitPrice = 20, OrderedAmount = 4},
                 }
             };
 
-            var cartCalculator = new Application.Services.OrderCalculator();
+            var cartCalculator = new Application.Services.OrderCalculator(_repository);
 
-            var totalCalculatedCost = cartCalculator.CalculateTotal(order);
+            var totalCalculatedCost = cartCalculator.CalculateItemTotal(order);
 
             totalCalculatedCost.Should().Be(380);
         }

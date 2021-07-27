@@ -21,9 +21,8 @@ namespace API.Endpoints.Items
                 Items = request.OrderItems.Select(i =>
                 new Item
                 {
-                    Amount = i.Amount,
-                    Id = i.Id,
-                    UnitPrice = i.
+                    OrderedAmount = i.Amount,
+                    Id = i.Id
                 }).ToList()
             };
         }

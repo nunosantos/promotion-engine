@@ -1,98 +1,51 @@
-﻿using System.Linq;
+﻿using Application.Interfaces;
+using Application.Strategies;
+using Application.Stubs;
 using Domain.Orders;
+using System;
+using System.Linq;
 
 namespace Application.Services
 {
     public class OrderCalculator
     {
-        public int CalculateTotal(Order order)
+        private readonly IRepository _promotionRepository;
+
+        public OrderCalculator(IRepository promotionRepository)
         {
-            var combinedPromotionIsActive = false;
+            this._promotionRepository = promotionRepository;
+        }
+
+        public int CalculateItemTotal(Order order)
+        {
+            if (order == null) throw new ArgumentNullException(nameof(order));
+
             var total = 0;
-            var skuIds = order.Items.Select(i => i.Id).ToList();
-            var orderItems = order.Items.ToList();
+            var promotionCalculator = new PromotionCalculationContext();
+            var promotions = Promotions.GetPromotions().ToList();
 
-            foreach (var skuId in skuIds)
+            foreach (var orderItem in order.Items)
             {
-                //group individual promotions
-                if (skuId == "A")
+                var promotion = promotions
+                                        .FirstOrDefault(p =>
+                                            p.ApplicableIDs.Contains(orderItem.Id));
+
+                switch (promotion?.ApplicableIDs.Length)
                 {
-                    var promotionUnitCost = 130;
-                    var numberOfTimesPromotionIsValid = 0;
-                    var itemsYetToBeCalculated = 0;
-                    var orderItem = orderItems.FirstOrDefault(i => i.Id == skuId);
-                    for (var i = 1; i <= orderItem.Amount; i++)
-                    {
-                        if (i % 3 == 0 && orderItem.Amount >= i)
-                        {
-                            numberOfTimesPromotionIsValid++;
-                            itemsYetToBeCalculated = orderItem.Amount - i;
-                        }
-                    }
+                    case 1:
+                        promotionCalculator.SetPromotionStrategy(new IndividualPromotionStrategy(promotions.FirstOrDefault(i => i.Id == orderItem.Id), order, orderItem.Id));
+                        total += promotionCalculator.CalculateTotal();
+                        break;
 
-                    if (numberOfTimesPromotionIsValid > 0)
-                    {
-                        total += (promotionUnitCost * numberOfTimesPromotionIsValid) +
-                                 (itemsYetToBeCalculated * orderItem.UnitPrice);
-                    }
-                    else
-                    {
-                        total += orderItem.Amount * orderItem.UnitPrice;
-                    }
+                    case > 1:
+                        promotionCalculator.SetPromotionStrategy(new CombinedPromotionStrategy(promotion, order));
+                        total += promotionCalculator.CalculateTotal();
+                        break;
 
-
-                    continue;
-                }
-                else if (skuId == "B")
-                {
-                    var promotionUnitCost = 45;
-                    var numberOfTimesPromotionIsValid = 0;
-                    var itemsYetToBeCalculated = 0;
-                    var orderItem = order.Items.FirstOrDefault(i => i.Id == skuId);
-                    for (var i = 1; i <= orderItem.Amount; i++)
-                    {
-                        if (i % 2 == 0 && orderItem.Amount >= i)
-                        {
-                            numberOfTimesPromotionIsValid++;
-                            itemsYetToBeCalculated = orderItem.Amount - i;
-                        }
-                    }
-
-                    if (numberOfTimesPromotionIsValid > 0)
-                    {
-                        total += (promotionUnitCost * numberOfTimesPromotionIsValid) +
-                                 (itemsYetToBeCalculated * orderItem.UnitPrice);
-                    }
-                    else
-                    {
-                        total += orderItem.Amount * orderItem.UnitPrice;
-                    }
-
-                    continue;
-                }
-                else if (skuId == "C" ^ skuId == "D")
-                {
-
-                    if (!combinedPromotionIsActive)
-                    {
-                        if (orderItems.Any(i => i.Id == "D"))
-                        {
-                            combinedPromotionIsActive = true;
-                            continue;
-                        }
-
-                        var item = orderItems.FirstOrDefault(i => i.Id == skuId);
-                        total += item.Amount * item.UnitPrice;
-                        continue;
-                    }
-
-                    total += 30;
-                }
-                else
-                //group combined promotions
-                {
-                    var item = orderItems.FirstOrDefault(i => i.Id == skuId);
-                    total += item.Amount * item.UnitPrice;
+                    default:
+                        promotionCalculator.SetPromotionStrategy(new PromotionNotActiveStrategy(order, orderItem.Id));
+                        total += promotionCalculator.CalculateTotal();
+                        break;
                 }
             }
 

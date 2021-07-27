@@ -6,6 +6,7 @@ namespace Application.Interfaces
     public interface IRepository
     {
         void Add(IEnumerable<Item> item);
+
         IEnumerable<Item> Get();
     }
 }

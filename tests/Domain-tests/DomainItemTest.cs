@@ -19,7 +19,6 @@ namespace Domain_tests
         [Fact]
         public void CreatesOrder_WhenSKUIDIsB_Returns50()
         {
-
             var orderItems = new List<Item>
             {
                 new() {Id = "A", UnitPrice = 50},
@@ -34,7 +33,6 @@ namespace Domain_tests
         [Fact]
         public void CreatesOrder_WhenSKUIDIsC_Returns20()
         {
-
             var orderItems = new List<Item>()
             {
                 new() { Id = "A", UnitPrice = 50},

@@ -2,9 +2,10 @@
 using Application.Interfaces;
 using Application.Services;
 using Infrastructure.Endpoints;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace API.Endpoints.Orders
@@ -25,19 +26,21 @@ namespace API.Endpoints.Orders
             OperationId = "Order.Create",
             Tags = new[] { "CreateEndpoint" })
         ]
-
+        [Consumes(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public override async Task<ActionResult> HandleAsync(CreateOrderCommand request)
         {
             if (request is null)
             {
-                throw new ArgumentNullException(nameof(request));
+                BadRequest();
             }
 
             var order = RepositoryMapper.MapOrder(request);
 
-            var orderCalculator = new OrderCalculator();
+            var orderCalculator = new OrderCalculator(_repository);
 
-            order.Total = orderCalculator.CalculateTotal(order); 
+            order.Total = orderCalculator.CalculateItemTotal(order);
 
             return Created("order", order);
         }
