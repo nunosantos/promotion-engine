@@ -1,17 +1,12 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel;
-
-namespace Domain.Orders
+﻿namespace Domain.Orders
 {
     public class Promotion
     {
-        public int Id { get; set; }
-        public int UnitCostAmount { get; set; }
+        public string Id { get; set; }
+        public int DiscountedPrice { get; set; }
         public int PriceTrigger { get; set; }
+        public bool Active { get; set; }
 
-        [DefaultValue(0)]
-        public int NumberOfTimesValid { get; set; }
-
-        public IEnumerable<Item> Items { get; set; }
+        public string[] ApplicableIDs { get; set; }
     }
 }

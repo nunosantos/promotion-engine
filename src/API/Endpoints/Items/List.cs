@@ -22,7 +22,7 @@ namespace API.Endpoints.Items
         [SwaggerOperation(
             Summary = "List all items",
             Description = "List all items",
-            OperationId = "Item.List",
+            OperationId = "Product.List",
             Tags = new[] { "ItemEndpoint" })
         ]
         [Consumes(MediaTypeNames.Application.Json)]

@@ -6,19 +6,19 @@ namespace Infrastructure
 {
     public class Repository : IRepository
     {
-        private readonly List<Item> _items;
+        private readonly List<Product> _items;
 
         public Repository()
         {
-            _items = new List<Item>();
+            _items = new List<Product>();
         }
 
-        public void Add(IEnumerable<Item> items)
+        public void Add(IEnumerable<Product> items)
         {
             _items.AddRange(items);
         }
 
-        public IEnumerable<Item> Get()
+        public IEnumerable<Product> Get()
         {
             return _items;
         }

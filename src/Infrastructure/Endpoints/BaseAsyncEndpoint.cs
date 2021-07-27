@@ -11,6 +11,7 @@ namespace Infrastructure.Endpoints
             {
                 public abstract Task<ActionResult<TResponse>> HandleAsync(TRequest request);
             }
+
             public abstract class WithoutResponse : BaseEndpoint
             {
                 public abstract Task<ActionResult> HandleAsync(TRequest request);
@@ -23,12 +24,12 @@ namespace Infrastructure.Endpoints
             {
                 public abstract Task<ActionResult<TResponse>> HandleAsync();
             }
+
             public abstract class WithoutResponse : BaseEndpoint
             {
                 public abstract Task<ActionResult> HandleAsync();
             }
         }
-
     }
 
     [ApiController]

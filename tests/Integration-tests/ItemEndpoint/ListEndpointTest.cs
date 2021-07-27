@@ -1,6 +1,7 @@
 ﻿using API;
 using API.Endpoints.Items;
 using Domain.Orders;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -8,7 +9,6 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using FluentAssertions;
 using Xunit;
 
 namespace Integration_tests.ItemEndpoint
@@ -27,7 +27,7 @@ namespace Integration_tests.ItemEndpoint
         {
             var createOrderItemsCommand = new CreateItemCommand()
             {
-                Items = new List<Item>
+                Items = new List<Product>
                 {
                     new () { Id = "A", UnitPrice = 50},
                     new () { Id = "B", UnitPrice = 30},

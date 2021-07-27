@@ -7,23 +7,24 @@ namespace API.Endpoints.Items
 {
     public class RepositoryMapper
     {
-        public static IEnumerable<Item> MapItem(CreateItemCommand request)
+        public static IEnumerable<Product> MapItem(CreateItemCommand request, Application.Interfaces.IRepository _repository)
         {
             return request
                         .Items
-                        .Select(i => new Item { Id = i.Id, UnitPrice = i.UnitPrice });
+                        .Select(i => new Product { Id = i.Id, UnitPrice = i.UnitPrice });
         }
 
-        public static Order MapOrder(CreateOrderCommand request)
+        public static Order MapOrder(CreateOrderCommand request, IEnumerable<Product> existingItems)
         {
             return new Order()
             {
-                Items = request.OrderItems.Select(i =>
-                new Item
-                {
-                    Amount = i.Amount,
-                    Id = i.Id
-                }).ToList()
+                OrderItems = request.OrderItems
+                //OrderItems = request.OrderItems.Select(i =>
+                //new Product
+                //{
+                //    OrderedAmount = i.OrderedAmount,
+                //    Id = i.Id
+                //}).ToList()
             };
         }
     }
