@@ -21,7 +21,7 @@ namespace API.Endpoints.Items
         [SwaggerOperation(
             Summary = "CreateOrderCommand a set of items",
             Description = "CreateOrderCommand a set of items",
-            OperationId = "Item.CreateOrderCommand",
+            OperationId = "Product.CreateOrderCommand",
             Tags = new[] { "ItemEndpoint" })
         ]
         [Consumes(MediaTypeNames.Application.Json)]
@@ -34,7 +34,8 @@ namespace API.Endpoints.Items
                 BadRequest();
             }
 
-            var item = RepositoryMapper.MapItem(request);
+
+            var item = RepositoryMapper.MapItem(request, _repository);
 
             _repository.Add(item);
 

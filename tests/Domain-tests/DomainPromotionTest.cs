@@ -13,7 +13,7 @@ namespace Domain_tests
             {
                 Id = "A",
                 DiscountedPrice = 30,
-                //Item = Enumerable.Repeat(new Item(), 3),
+                //Product = Enumerable.Repeat(new Product(), 3),
                 PriceTrigger = 3
             };
 

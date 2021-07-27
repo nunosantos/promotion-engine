@@ -17,15 +17,20 @@ namespace Unit_tests.Strategies
 
             var promotion = Promotions.GetPromotions().FirstOrDefault(p => p.ApplicableIDs.Contains(orderItemId));
 
+            var products = new List<Product>
+            {
+                new() {Id = "A", UnitPrice = 50}
+            };
+
             var order = new Order()
             {
-                Items = new List<Item>()
+                OrderItems = new List<OrderItem>()
                 {
-                    new() { Id ="A", UnitPrice = 50, OrderedAmount = 5 }
+                    new() { Id ="A",  OrderedAmount = 5 }
                 }
             };
 
-            var strategy = new IndividualPromotionStrategy(promotion, order, orderItemId);
+            var strategy = new IndividualPromotionStrategy(promotion, order, orderItemId, products);
             var total = strategy.CalculateTotal();
 
             total.Should().Be(230);

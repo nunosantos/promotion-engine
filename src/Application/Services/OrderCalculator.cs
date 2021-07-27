@@ -23,27 +23,26 @@ namespace Application.Services
             var total = 0;
             var promotionCalculator = new PromotionCalculationContext();
             var promotions = Promotions.GetPromotions().ToList();
+            var products = _promotionRepository.Get();
 
-            foreach (var orderItem in order.Items)
+            foreach (var orderItem in order.OrderItems)
             {
-                var promotion = promotions
-                                        .FirstOrDefault(p =>
-                                            p.ApplicableIDs.Contains(orderItem.Id));
+                var promotion = promotions.FirstOrDefault(p => p.ApplicableIDs.Contains(orderItem.Id));
 
                 switch (promotion?.ApplicableIDs.Length)
                 {
                     case 1:
-                        promotionCalculator.SetPromotionStrategy(new IndividualPromotionStrategy(promotions.FirstOrDefault(i => i.Id == orderItem.Id), order, orderItem.Id));
+                        promotionCalculator.SetPromotionStrategy(new IndividualPromotionStrategy(promotions.FirstOrDefault(i => i.Id == orderItem.Id), order, orderItem.Id, products));
                         total += promotionCalculator.CalculateTotal();
                         break;
 
                     case > 1:
-                        promotionCalculator.SetPromotionStrategy(new CombinedPromotionStrategy(promotion, order));
+                        promotionCalculator.SetPromotionStrategy(new CombinedPromotionStrategy(promotion, order, products));
                         total += promotionCalculator.CalculateTotal();
                         break;
 
                     default:
-                        promotionCalculator.SetPromotionStrategy(new PromotionNotActiveStrategy(order, orderItem.Id));
+                        promotionCalculator.SetPromotionStrategy(new PromotionNotActiveStrategy(order, orderItem.Id,products));
                         total += promotionCalculator.CalculateTotal();
                         break;
                 }

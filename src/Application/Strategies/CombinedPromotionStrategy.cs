@@ -1,4 +1,5 @@
 ﻿using Domain.Orders;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Application.Strategies
@@ -7,26 +8,30 @@ namespace Application.Strategies
     {
         private readonly Promotion promotion;
         private readonly Order order;
+        private readonly IEnumerable<Product> products;
         private readonly bool combinedPromotionIsActive;
 
-        public CombinedPromotionStrategy(Promotion promotion, Order order)
+        public CombinedPromotionStrategy(Promotion promotion, Order order, IEnumerable<Product> products)
         {
             this.promotion = promotion;
             this.order = order;
+            this.products = products;
         }
 
         public int CalculateTotal()
         {
             var applicableIDs = promotion.ApplicableIDs;
-            var items = order.Items;
+            //var products = order.OrderItems;
 
             if (!promotion.Active)
             {
-                var foundItems = order.Items.Where(i => applicableIDs.Contains(i.Id));
+                var foundItems = order.OrderItems.Where(i => applicableIDs.Contains(i.Id));
                 var minimumAmount = foundItems.Min(o => o.OrderedAmount);
                 var maximumAmount = foundItems.Max(o => o.OrderedAmount);
-                var highestOrderedAmount = order.Items.Where(i => applicableIDs.Contains(i.Id)).Aggregate((previous, next) =>
+                var highestOrderedAmount = foundItems.Aggregate((previous, next) =>
                     previous.OrderedAmount > next.OrderedAmount ? previous : next);
+
+                var matchedProduct = products.FirstOrDefault(p => p.Id == highestOrderedAmount.Id);
 
                 if (foundItems.Count() > 1)
                 {
@@ -37,10 +42,10 @@ namespace Application.Strategies
                     }
 
                     return (promotion.DiscountedPrice * minimumAmount) +
-                           highestOrderedAmount.UnitPrice * (maximumAmount - minimumAmount);
+                           matchedProduct.UnitPrice * (maximumAmount - minimumAmount);
                 }
 
-                return highestOrderedAmount.OrderedAmount * highestOrderedAmount.UnitPrice;
+                return highestOrderedAmount.OrderedAmount * matchedProduct.UnitPrice;
             }
 
             return 0;

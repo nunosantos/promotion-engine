@@ -4,6 +4,6 @@ namespace API.Endpoints.Items
 {
     public class ListItemResult
     {
-        public Item[] Items { get; set; }
+        public Product[] Items { get; set; }
     }
 }

@@ -20,13 +20,22 @@ namespace Unit_tests.OrderCalculator
         [Fact]
         public void CreateOrder_ScenarioA_Buying_1xA_1xB_1xC_Returns100()
         {
+            var products = new List<Product>
+            {
+                new() {Id = "A", UnitPrice = 50},
+                new() {Id = "B", UnitPrice = 30},
+                new() {Id = "C", UnitPrice = 20},
+            };
+
+            _repository.Add(products);
+
             var order = new Order()
             {
-                Items = new List<Item>()
+                OrderItems = new List<OrderItem>()
                 {
-                    new Item() { Id ="A", UnitPrice = 50, OrderedAmount = 1},
-                    new Item() { Id ="B", UnitPrice = 30, OrderedAmount = 1},
-                    new Item() { Id ="C", UnitPrice = 20, OrderedAmount = 1 }
+                    new()  { Id ="A",  OrderedAmount = 1},
+                    new()  { Id ="B",  OrderedAmount = 1},
+                    new()  { Id ="C",  OrderedAmount = 1 }
                 }
             };
 
@@ -40,19 +49,28 @@ namespace Unit_tests.OrderCalculator
         [Fact]
         public void CreateOrder_ScenarioB_Buying_5xA_5xB_1xC_Returns370()
         {
-            var order = new Order()
+            var products = new List<Product>
             {
-                Items = new List<Item>()
+                new() {Id = "A", UnitPrice = 50},
+                new() {Id = "B", UnitPrice = 30},
+                new() {Id = "C", UnitPrice = 20},
+            };
+
+            _repository.Add(products);
+
+            var orderItems = new Order()
+            {
+                OrderItems = new List<OrderItem>()
                 {
-                    new Item() { Id ="A", UnitPrice = 50, OrderedAmount = 5},
-                    new Item() { Id ="B", UnitPrice = 30, OrderedAmount = 5},
-                    new Item() { Id ="C", UnitPrice = 20, OrderedAmount = 1}
+                    new() { Id ="A", OrderedAmount = 5},
+                    new() { Id ="B", OrderedAmount = 5},
+                    new() { Id ="C", OrderedAmount = 1}
                 }
             };
 
             var cartCalculator = new Application.Services.OrderCalculator(_repository);
 
-            var totalCalculatedCost = cartCalculator.CalculateItemTotal(order);
+            var totalCalculatedCost = cartCalculator.CalculateItemTotal(orderItems);
 
             totalCalculatedCost.Should().Be(370);
         }
@@ -60,14 +78,25 @@ namespace Unit_tests.OrderCalculator
         [Fact]
         public void CreateOrder_ScenarioC_Buying_3xA_5xB_1xC_1xD_Returns280()
         {
+
+            var products = new List<Product>
+            {
+                new() {Id = "A", UnitPrice = 50},
+                new() {Id = "B", UnitPrice = 30},
+                new() {Id = "C", UnitPrice = 20},
+                new() {Id = "D", UnitPrice = 15},
+            };
+
+            _repository.Add(products);
+
             var order = new Order()
             {
-                Items = new List<Item>()
+                OrderItems = new List<OrderItem>()
                 {
-                    new Item() { Id ="A", UnitPrice = 50, OrderedAmount = 3},
-                    new Item() { Id ="B", UnitPrice = 30, OrderedAmount = 5},
-                    new Item() { Id ="C", UnitPrice = 20, OrderedAmount = 1},
-                    new Item() { Id ="D", UnitPrice = 20, OrderedAmount = 1}
+                    new() { Id ="A", OrderedAmount = 3},
+                    new() { Id ="B", OrderedAmount = 5},
+                    new() { Id ="C", OrderedAmount = 1},
+                    new() { Id ="D", OrderedAmount = 1}
                 }
             };
 
@@ -81,15 +110,26 @@ namespace Unit_tests.OrderCalculator
         [Fact]
         public void CreateOrder_ScenarioD_AddNewPromotion_1xE_Returns300()
         {
+            var products = new List<Product>
+            {
+                new() {Id = "A", UnitPrice = 50},
+                new() {Id = "B", UnitPrice = 30},
+                new() {Id = "C", UnitPrice = 20},
+                new() {Id = "D", UnitPrice = 20},
+                new() {Id = "E", UnitPrice = 20}
+            };
+
+            _repository.Add(products);
+
             var order = new Order()
             {
-                Items = new List<Item>()
+                OrderItems = new List<OrderItem>()
                 {
-                    new Item() { Id ="A", UnitPrice = 50, OrderedAmount = 3},
-                    new Item() { Id ="B", UnitPrice = 30, OrderedAmount = 5},
-                    new Item() { Id ="C", UnitPrice = 20, OrderedAmount = 1},
-                    new Item() { Id ="D", UnitPrice = 20, OrderedAmount = 1},
-                    new Item() { Id ="E", UnitPrice = 20, OrderedAmount = 1}
+                    new() { Id ="A",  OrderedAmount = 3},
+                    new() { Id ="B",  OrderedAmount = 5},
+                    new() { Id ="C",  OrderedAmount = 1},
+                    new() { Id ="D",  OrderedAmount = 1},
+                    new() { Id ="E",  OrderedAmount = 1}
                 }
             };
 
@@ -103,16 +143,28 @@ namespace Unit_tests.OrderCalculator
         [Fact]
         public void CreateOrder_ScenarioE_AddNewPromotion_1xE_4xF_Returns380()
         {
+            var products = new List<Product>
+            {
+                new() {Id = "A", UnitPrice = 50},
+                new() {Id = "B", UnitPrice = 30},
+                new() {Id = "C", UnitPrice = 20},
+                new() {Id = "D", UnitPrice = 20},
+                new() {Id = "E", UnitPrice = 20},
+                new() {Id = "F", UnitPrice = 40},
+            };
+
+            _repository.Add(products);
+
             var order = new Order()
             {
-                Items = new List<Item>()
+                OrderItems = new List<OrderItem>()
                 {
-                    new Item() { Id ="A", UnitPrice = 50, OrderedAmount = 3},
-                    new Item() { Id ="B", UnitPrice = 30, OrderedAmount = 5},
-                    new Item() { Id ="C", UnitPrice = 20, OrderedAmount = 1},
-                    new Item() { Id ="D", UnitPrice = 20, OrderedAmount = 1},
-                    new Item() { Id ="E", UnitPrice = 20, OrderedAmount = 1},
-                    new Item() { Id ="F", UnitPrice = 20, OrderedAmount = 4},
+                    new() { Id ="A",  OrderedAmount = 3},
+                    new() { Id ="B",  OrderedAmount = 5},
+                    new() { Id ="C",  OrderedAmount = 1},
+                    new() { Id ="D",  OrderedAmount = 1},
+                    new() { Id ="E",  OrderedAmount = 1},
+                    new() { Id ="F",  OrderedAmount = 4},
                 }
             };
 
@@ -120,7 +172,7 @@ namespace Unit_tests.OrderCalculator
 
             var totalCalculatedCost = cartCalculator.CalculateItemTotal(order);
 
-            totalCalculatedCost.Should().Be(380);
+            totalCalculatedCost.Should().Be(460);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Orders
 {
-    public class Item
+    public class Product
     {
         public string Id { get; set; }
         public int UnitPrice { get; set; }

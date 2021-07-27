@@ -18,7 +18,7 @@ namespace Unit_tests.Repository
         [Fact]
         public void Add_Item_To_Repository()
         {
-            var item = new List<Item>
+            var item = new List<Product>
             {
                 new()
                 {
@@ -34,7 +34,7 @@ namespace Unit_tests.Repository
         [Fact]
         public void Get_Items_From_Repository()
         {
-            var items = new List<Item>()
+            var items = new List<Product>()
             {
                 new()
                 {

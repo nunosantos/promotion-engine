@@ -5,6 +5,6 @@ namespace API.Endpoints.Items
 {
     public class CreateItemCommand
     {
-        public IEnumerable<Item> Items { get; set; }
+        public IEnumerable<Product> Items { get; set; }
     }
 }

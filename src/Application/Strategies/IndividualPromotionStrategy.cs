@@ -1,5 +1,6 @@
 ﻿using Domain.Orders;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Application.Strategies
@@ -9,12 +10,15 @@ namespace Application.Strategies
         private readonly Promotion promotion;
         private readonly Order order;
         private readonly string skuId;
+        private readonly IEnumerable<Product> products;
 
-        public IndividualPromotionStrategy(Promotion promotion, Order order, string skuId)
+
+        public IndividualPromotionStrategy(Promotion promotion, Order order, string skuId, IEnumerable<Product> products)
         {
             this.promotion = promotion;
             this.order = order;
             this.skuId = skuId;
+            this.products = products;
         }
 
         public int CalculateTotal()
@@ -29,9 +33,10 @@ namespace Application.Strategies
                 throw new ArgumentNullException(nameof(order));
             }
 
-            var matchedOrderItem = order.Items.FirstOrDefault(i => i.Id == skuId);
+            var matchedOrderItem = order.OrderItems.FirstOrDefault(i => i.Id == skuId);
+            var matchedProduct = products.FirstOrDefault(p => p.Id == skuId);
 
-            if (matchedOrderItem?.OrderedAmount < promotion.PriceTrigger) return matchedOrderItem.OrderedAmount * matchedOrderItem.UnitPrice;
+            if (matchedOrderItem?.OrderedAmount < promotion.PriceTrigger) return matchedOrderItem.OrderedAmount * matchedProduct.UnitPrice;
             {
                 var total = 0;
 
@@ -46,7 +51,7 @@ namespace Application.Strategies
                     numberOfItemsYetToBeCalculated = matchedOrderItem.OrderedAmount - i;
                 }
 
-                return total += matchedOrderItem.UnitPrice * numberOfItemsYetToBeCalculated;
+                return total += matchedProduct.UnitPrice * numberOfItemsYetToBeCalculated;
             }
 
         }

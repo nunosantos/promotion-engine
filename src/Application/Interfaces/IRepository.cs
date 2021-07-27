@@ -5,8 +5,8 @@ namespace Application.Interfaces
 {
     public interface IRepository
     {
-        void Add(IEnumerable<Item> item);
+        void Add(IEnumerable<Product> item);
 
-        IEnumerable<Item> Get();
+        IEnumerable<Product> Get();
     }
 }

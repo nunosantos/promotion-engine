@@ -26,7 +26,7 @@ namespace Integration_tests.ItemEndpoint
         {
             var createOrderItemsCommand = new CreateItemCommand()
             {
-                Items = new List<Item>
+                Items = new List<Product>
                 {
                     new () { Id = "A", UnitPrice = 50},
                     new () { Id = "B", UnitPrice = 30},

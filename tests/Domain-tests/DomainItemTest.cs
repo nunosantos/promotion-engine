@@ -10,7 +10,7 @@ namespace Domain_tests
         [Fact]
         public void CreatesOrder_WhenSKUIDIsA_Returns50()
         {
-            var orderItems = new Item() { Id = "A", UnitPrice = 50 };
+            var orderItems = new Product() { Id = "A", UnitPrice = 50 };
 
             orderItems.Id.Should().Be("A");
             orderItems.UnitPrice.Should().Be(50);
@@ -19,7 +19,7 @@ namespace Domain_tests
         [Fact]
         public void CreatesOrder_WhenSKUIDIsB_Returns50()
         {
-            var orderItems = new List<Item>
+            var orderItems = new List<Product>
             {
                 new() {Id = "A", UnitPrice = 50},
                 new() {Id = "B", UnitPrice = 30},
@@ -33,7 +33,7 @@ namespace Domain_tests
         [Fact]
         public void CreatesOrder_WhenSKUIDIsC_Returns20()
         {
-            var orderItems = new List<Item>()
+            var orderItems = new List<Product>()
             {
                 new() { Id = "A", UnitPrice = 50},
                 new() { Id = "B", UnitPrice = 30},
@@ -48,7 +48,7 @@ namespace Domain_tests
         [Fact]
         public void CreatesOrder_WhenSKUIDIsD_Returns15()
         {
-            var orderItems = new List<Item>()
+            var orderItems = new List<Product>()
             {
                 new() {Id = "A", UnitPrice = 50},
                 new() {Id = "B", UnitPrice = 30},

@@ -36,7 +36,10 @@ namespace API.Endpoints.Orders
                 BadRequest();
             }
 
-            var order = RepositoryMapper.MapOrder(request);
+            var existingItems = _repository.Get();
+
+
+            var order = RepositoryMapper.MapOrder(request, existingItems);
 
             var orderCalculator = new OrderCalculator(_repository);
 
