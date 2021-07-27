@@ -27,7 +27,7 @@ namespace Integration_tests.OrderEndpoint
         {
             var createOrderItemsCommand = new CreateOrderCommand()
             {
-                OrderItems = Enumerable.Repeat(new OrderItem() { Id = "A", Amount = 30 }, 2)
+                OrderItems = Enumerable.Repeat(new OrderItem() { Id = "A", Amount = 30 }, 1)
             };
 
             var stringContent = new StringContent(JsonSerializer.Serialize(createOrderItemsCommand), Encoding.UTF8, "application/json");

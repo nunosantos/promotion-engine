@@ -54,11 +54,11 @@ namespace Unit_tests.OrderCalculator
             {
                 Items = new List<Item>()
                 {
-                    new Item() { Id ="A", Amount = 3},
-                    new Item() { Id ="B", Amount = 5},
-                    new Item() { Id ="C", Amount = 1},
-                    new Item() { Id ="D", Amount = 1}
-                }
+                    new Item() { Id ="A", UnitPrice = 50, Amount = 3},
+                    new Item() { Id ="B", UnitPrice = 30, Amount = 5},
+                    new Item() { Id ="C", UnitPrice = 20, Amount = 1},
+                    new Item() { Id ="D", UnitPrice = 20, Amount = 1}
+                }                        
             };
 
             var cartCalculator = new Application.Services.OrderCalculator();

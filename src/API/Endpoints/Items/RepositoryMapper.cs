@@ -22,7 +22,8 @@ namespace API.Endpoints.Items
                 new Item
                 {
                     Amount = i.Amount,
-                    Id = i.Id
+                    Id = i.Id,
+                    UnitPrice = i.
                 }).ToList()
             };
         }
