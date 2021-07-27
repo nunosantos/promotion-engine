@@ -27,6 +27,15 @@ dotnet build
 dotnet test
 
 ```
+
+4. Launch API in visual studio and read API documentation (ie: https://localhost:PORT/swagger/index.html)
+
+![api-doc](https://user-images.githubusercontent.com/3398578/127232096-848dff13-9a0a-43ce-a799-f27968f7c6f0.png)
+
+5. Start by posting a set of items to the API
+
+6- Post an order request. Please note that the order matters given that all orders are stored in memory without the use of a supporting JSON, database, etc. 
+
 ## 2. Technologies
 The application has been designed on .NET 5.0
 
