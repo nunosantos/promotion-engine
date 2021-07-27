@@ -42,7 +42,7 @@ namespace Application.Services
                         break;
 
                     default:
-                        promotionCalculator.SetPromotionStrategy(new PromotionNotActiveStrategy(order, orderItem.Id,products));
+                        promotionCalculator.SetPromotionStrategy(new PromotionNotActiveStrategy(order, orderItem.Id, products));
                         total += promotionCalculator.CalculateTotal();
                         break;
                 }
