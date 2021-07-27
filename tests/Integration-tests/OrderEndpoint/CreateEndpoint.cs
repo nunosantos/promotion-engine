@@ -1,13 +1,15 @@
 ﻿using API;
 using API.Endpoints.Orders;
+using Domain.Orders;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Newtonsoft.Json;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Xunit;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Integration_tests.OrderEndpoint
 {
@@ -30,15 +32,16 @@ namespace Integration_tests.OrderEndpoint
 
             var stringContent = new StringContent(JsonSerializer.Serialize(createOrderItemsCommand), Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync($"/items", stringContent);
+            var response = await client.PostAsync($"/order", stringContent);
 
             response.EnsureSuccessStatusCode();
 
             var stringResponse = await response.Content.ReadAsStringAsync();
 
-            var total = JsonSerializer.Deserialize<int>(stringResponse);
 
-            total.Should().Be(30);
+            var order = JsonConvert.DeserializeObject<Order>(stringResponse);
+
+            order.Total.Should().Be(30);
         }
     }
 }

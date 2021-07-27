@@ -28,10 +28,10 @@ namespace Integration_tests.ItemEndpoint
             {
                 Items = new List<Item>
                 {
-                    new () { Id = 'A', UnitPrice = 50},
-                    new () { Id = 'B', UnitPrice = 30},
-                    new () { Id = 'C', UnitPrice = 20},
-                    new () { Id = 'D', UnitPrice = 15},
+                    new () { Id = "A", UnitPrice = 50},
+                    new () { Id = "B", UnitPrice = 30},
+                    new () { Id = "C", UnitPrice = 20},
+                    new () { Id = "D", UnitPrice = 15},
                 }
             };
 
