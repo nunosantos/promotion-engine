@@ -39,9 +39,9 @@ namespace Unit_tests.OrderCalculator
                 }
             };
 
-            var cartCalculator = new Application.Services.OrderCalculator(_repository);
+            var calculator = new Application.Services.OrderCalculatorService(_repository);
 
-            var totalCalculatedCost = cartCalculator.CalculateItemTotal(order);
+            var totalCalculatedCost = calculator.CalculateItemTotal(order);
 
             totalCalculatedCost.Should().Be(100);
         }
@@ -68,9 +68,9 @@ namespace Unit_tests.OrderCalculator
                 }
             };
 
-            var cartCalculator = new Application.Services.OrderCalculator(_repository);
+            var calculator = new Application.Services.OrderCalculatorService(_repository);
 
-            var totalCalculatedCost = cartCalculator.CalculateItemTotal(orderItems);
+            var totalCalculatedCost = calculator.CalculateItemTotal(orderItems);
 
             totalCalculatedCost.Should().Be(370);
         }
@@ -78,7 +78,6 @@ namespace Unit_tests.OrderCalculator
         [Fact]
         public void CreateOrder_ScenarioC_Buying_3xA_5xB_1xC_1xD_Returns280()
         {
-
             var products = new List<Product>
             {
                 new() {Id = "A", UnitPrice = 50},
@@ -100,9 +99,9 @@ namespace Unit_tests.OrderCalculator
                 }
             };
 
-            var cartCalculator = new Application.Services.OrderCalculator(_repository);
+            var calculator = new Application.Services.OrderCalculatorService(_repository);
 
-            var totalCalculatedCost = cartCalculator.CalculateItemTotal(order);
+            var totalCalculatedCost = calculator.CalculateItemTotal(order);
 
             totalCalculatedCost.Should().Be(280);
         }
@@ -133,9 +132,9 @@ namespace Unit_tests.OrderCalculator
                 }
             };
 
-            var cartCalculator = new Application.Services.OrderCalculator(_repository);
+            var calculator = new Application.Services.OrderCalculatorService(_repository);
 
-            var totalCalculatedCost = cartCalculator.CalculateItemTotal(order);
+            var totalCalculatedCost = calculator.CalculateItemTotal(order);
 
             totalCalculatedCost.Should().Be(300);
         }
@@ -168,9 +167,9 @@ namespace Unit_tests.OrderCalculator
                 }
             };
 
-            var cartCalculator = new Application.Services.OrderCalculator(_repository);
+            var calculator = new Application.Services.OrderCalculatorService(_repository);
 
-            var totalCalculatedCost = cartCalculator.CalculateItemTotal(order);
+            var totalCalculatedCost = calculator.CalculateItemTotal(order);
 
             totalCalculatedCost.Should().Be(460);
         }

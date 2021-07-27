@@ -1,4 +1,4 @@
-﻿namespace Application.Strategies
+﻿namespace Application.Interfaces
 {
     public interface IPromotionStrategy
     {

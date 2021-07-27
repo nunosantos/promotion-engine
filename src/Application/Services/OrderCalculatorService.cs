@@ -7,11 +7,11 @@ using System.Linq;
 
 namespace Application.Services
 {
-    public class OrderCalculator
+    public class OrderCalculatorService
     {
         private readonly IRepository _promotionRepository;
 
-        public OrderCalculator(IRepository promotionRepository)
+        public OrderCalculatorService(IRepository promotionRepository)
         {
             this._promotionRepository = promotionRepository;
         }
@@ -42,7 +42,7 @@ namespace Application.Services
                         break;
 
                     default:
-                        promotionCalculator.SetPromotionStrategy(new PromotionNotActiveStrategy(order, orderItem.Id,products));
+                        promotionCalculator.SetPromotionStrategy(new PromotionNotActiveStrategy(order, orderItem.Id, products));
                         total += promotionCalculator.CalculateTotal();
                         break;
                 }

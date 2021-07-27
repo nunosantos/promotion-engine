@@ -8,9 +8,6 @@ namespace Integration_tests
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
-
         }
     }
-
-
 }

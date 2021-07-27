@@ -12,7 +12,6 @@ namespace Infrastructure.Data
                 PriceTrigger = 3,
                 DiscountedPrice = 130,
                 ApplicableIDs = new string[] { "A" },
-
             };
             yield return new Promotion()
             {
