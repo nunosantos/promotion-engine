@@ -18,9 +18,9 @@ namespace API.Endpoints.Items
 
         [HttpPost("items")]
         [SwaggerOperation(
-            Summary = "Create a set of items",
-            Description = "Create a set of items",
-            OperationId = "Item.Create",
+            Summary = "CreateOrderCommand a set of items",
+            Description = "CreateOrderCommand a set of items",
+            OperationId = "Item.CreateOrderCommand",
             Tags = new[] { "ItemEndpoint" })
         ]
         public override async Task<ActionResult> HandleAsync([FromBody] CreateItemCommand request)

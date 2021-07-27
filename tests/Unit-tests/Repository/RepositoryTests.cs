@@ -22,7 +22,7 @@ namespace Unit_tests.Repository
             {
                 new()
                 {
-                    Id = 'A',
+                    Id = "A",
                     UnitPrice = 20
                 }
             };
@@ -38,12 +38,12 @@ namespace Unit_tests.Repository
             {
                 new()
                 {
-                    Id = 'A',
+                    Id = "A",
                     UnitPrice = 20
                 },
                 new()
                 {
-                    Id = 'B',
+                    Id = "B",
                     UnitPrice = 20
                 }
             };

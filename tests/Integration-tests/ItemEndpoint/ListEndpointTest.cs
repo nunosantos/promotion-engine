@@ -29,10 +29,10 @@ namespace Integration_tests.ItemEndpoint
             {
                 Items = new List<Item>
                 {
-                    new () { Id = 'A', UnitPrice = 50},
-                    new () { Id = 'B', UnitPrice = 30},
-                    new () { Id = 'C', UnitPrice = 20},
-                    new () { Id = 'D', UnitPrice = 15},
+                    new () { Id = "A", UnitPrice = 50},
+                    new () { Id = "B", UnitPrice = 30},
+                    new () { Id = "C", UnitPrice = 20},
+                    new () { Id = "D", UnitPrice = 15},
                 }
             };
 
@@ -45,7 +45,7 @@ namespace Integration_tests.ItemEndpoint
             var itemsResponse = await client.GetFromJsonAsync<ListItemResult>($"/items");
 
             itemsResponse.Items.Should().HaveCount(4);
-            itemsResponse.Items[3].Id.Should().Be('D');
+            itemsResponse.Items[3].Id.Should().Be("D");
             itemsResponse.Items[3].UnitPrice.Should().Be(15);
         }
     }
