@@ -17,15 +17,15 @@ namespace Infrastructure.Endpoints
             }
         }
 
-        public static class WithoutRequest<TRequest>
+        public static class WithoutRequest
         {
             public abstract class WithResponse<TResponse> : BaseEndpoint
             {
-                public abstract Task<ActionResult<TResponse>> HandleAsync(TRequest request);
+                public abstract Task<ActionResult<TResponse>> HandleAsync();
             }
             public abstract class WithoutResponse : BaseEndpoint
             {
-                public abstract Task<ActionResult> HandleAsync(TRequest request);
+                public abstract Task<ActionResult> HandleAsync();
             }
         }
 
