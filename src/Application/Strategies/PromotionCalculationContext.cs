@@ -1,4 +1,6 @@
-﻿namespace Application.Strategies
+﻿using Application.Interfaces;
+
+namespace Application.Strategies
 {
     public class PromotionCalculationContext
     {

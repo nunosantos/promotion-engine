@@ -42,7 +42,7 @@ namespace API.Endpoints.Orders
 
                 var order = RepositoryMapper.MapOrder(request);
 
-                var orderCalculator = new OrderCalculator(repository);
+                var orderCalculator = new OrderCalculatorService(repository);
 
                 order.Total = orderCalculator.CalculateItemTotal(order);
 

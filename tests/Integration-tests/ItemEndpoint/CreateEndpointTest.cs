@@ -11,7 +11,6 @@ using Xunit;
 
 namespace Integration_tests.ItemEndpoint
 {
-
     public class Create : IClassFixture<WebApplicationFactory<Startup>>
     {
         private readonly HttpClient client;

@@ -1,4 +1,5 @@
-﻿using Domain.Orders;
+﻿using Application.Interfaces;
+using Domain.Orders;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,7 +21,12 @@ namespace Application.Strategies
         public int CalculateTotal()
         {
             var product = products.FirstOrDefault(i => i.Id == skuId);
+
             var orderItem = order.OrderItems.FirstOrDefault(i => i.Id == skuId);
+
+            if (product == null ^ orderItem == null)
+                return 0;
+
             return orderItem.OrderedAmount * product.UnitPrice;
         }
     }

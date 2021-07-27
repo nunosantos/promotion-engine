@@ -1,5 +1,4 @@
 ﻿using API;
-using Application.Interfaces;
 using Application.Strategies;
 using Application.Stubs;
 using Domain.Orders;
@@ -13,13 +12,6 @@ namespace Unit_tests.Strategies
 {
     public class IndividualPromotionTests : IClassFixture<WebApplicationFactory<Startup>>
     {
-        private readonly IRepository repository;
-
-        public IndividualPromotionTests()
-        {
-            this.repository = new Infrastructure.Repository(); ;
-        }
-
         [Fact]
         public void CalculateTotal_IfPromotionIsValid_ReturnPromotionPrice()
         {
@@ -36,8 +28,7 @@ namespace Unit_tests.Strategies
             {
                 OrderItems = new List<OrderItem>()
                 {
-                    new OrderItem() {Id = "A", OrderedAmount = 5},
-
+                    new() {Id = "A", OrderedAmount = 5},
                 }
             };
 

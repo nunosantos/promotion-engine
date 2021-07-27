@@ -53,14 +53,11 @@ namespace Integration_tests.OrderEndpoint
 
             response = await client.PostAsync($"/order", stringContent);
 
-
             var stringResponse = await response.Content.ReadAsStringAsync();
 
             var order = JsonConvert.DeserializeObject<Order>(stringResponse);
 
             order.Total.Should().Be(130);
         }
-
-
     }
 }
