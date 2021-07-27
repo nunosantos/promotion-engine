@@ -4,5 +4,6 @@
     {
         public char Id { get; set; }
         public int UnitPrice { get; set; }
+        public int Amount { get; set; }
     }
 }
