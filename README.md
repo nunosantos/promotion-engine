@@ -3,7 +3,9 @@ An engine for promotion calculator
 
 ## Table of Contents
 [1. Getting Started](#1-getting-started)
+
 [2. Technologies](#2-technologies)
+
 [3. Comments](#3-comments)
 
 ## 1. Getting Started
